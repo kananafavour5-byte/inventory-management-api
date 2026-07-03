@@ -105,5 +105,31 @@ def search_food(barcode):
         "error": "Product not found"
     }), 404
 
+@app.route("/food/add/<barcode>", methods=["POST"])
+def add_food_from_api(barcode):
+
+    product = get_product(barcode)
+
+    if not product:
+        return jsonify({
+            "error": "Product not found"
+        }), 404
+
+    new_item = {
+        "id": len(inventory) + 1,
+        "barcode": barcode,
+        "product_name": product["product_name"],
+        "brand": product["brand"],
+        "price": 0.0,
+        "stock": 0
+    }
+
+    inventory.append(new_item)
+
+    return jsonify({
+        "message": "Product added from OpenFoodFacts",
+        "product": new_item
+    }), 201
+
 if __name__ == "__main__":
     app.run(debug=True)

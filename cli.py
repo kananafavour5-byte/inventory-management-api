@@ -34,6 +34,15 @@ def search_api():
 
     print(response.json())
 
+def import_from_api():
+
+    barcode = input("Enter barcode: ")
+
+    response = requests.post(
+        f"{BASE_URL}/food/add/{barcode}"
+    )
+
+    print(response.json())
 
 while True:
 
@@ -41,7 +50,8 @@ while True:
     print("1. View Inventory")
     print("2. Add Product")
     print("3. Search OpenFoodFacts")
-    print("4. Exit")
+    print("4. Import Product From OpenFoodFacts")
+    print("5. Exit")
 
     choice = input("> ")
 
@@ -55,4 +65,7 @@ while True:
         search_api()
 
     elif choice == "4":
+        import_from_api()
+
+    elif choice == "5":
         break
